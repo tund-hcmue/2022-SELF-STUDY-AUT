@@ -2,9 +2,11 @@ package com.example.core.keywords;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.JavascriptExecutor;
 
 public class WebKeywords {
     
@@ -54,5 +56,31 @@ public class WebKeywords {
      */
     public WebElement waitForElementToBeClickable(WebElement element){
         return wait.until(ExpectedConditions.elementToBeClickable(element));
+    }
+
+    /**
+     * Scroll to element in page
+     * @param webElement element to scroll
+     * @return keyword scroll to element
+     */
+    public WebKeywords scrollToElement(WebElement webElement){
+        ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView(true);", webElement);
+        return new WebKeywords(driver);
+    }
+
+    /**
+     * Clear text before set text
+     * @param webElement element to set text
+     * @param text value to set text for element
+     * @return
+     */
+    public WebKeywords setText(WebElement webElement, String text){
+        try {
+            webElement.clear();
+            webElement.sendKeys(text);
+        } catch (WebDriverException e) {
+            throw new WebDriverException("Element is not enable to set text");
+        }
+        return new WebKeywords(driver);
     }
 }
