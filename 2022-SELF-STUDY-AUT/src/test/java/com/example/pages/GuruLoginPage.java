@@ -39,7 +39,6 @@ public class GuruLoginPage extends BasePage{
 
     //Declare element
     private WebElement txtEmail = driver.findElement(By.xpath("//input[@name = 'emailid']"));
-    // private WebElement txtEmail = keywords.waitForLocatorOfElementVisibilities(By.xpath("//input[@name = 'emailid']"));
     private WebElement btnSubmit = driver.findElement(By.xpath("//input[@name = 'btnLogin']"));
     
     private String email = "tund.fit@gmail.com";
