@@ -10,9 +10,10 @@ import com.example.pages.GuruLoginPage;
 @Listeners(ReportListener.class)
 public class GuruLoginTest extends BaseTest{
     @Test(testName = "Verify that login function work correctly")
-    public void verfyThatLoginFunctionWorkCorrectly(){
+    public void verfyThatLoginFunctionWorkCorrectly() throws Exception{
         GuruLoginPage guruLoginPage = new GuruLoginPage(driver);
+        guruLoginPage.waitForAlertPresent();
         guruLoginPage.actionLogin();
-        Assert.assertTrue(guruLoginPage.isUrlCurrentPageContainsEmailOfUser());
+        Assert.assertTrue(guruLoginPage.isLoginSuccess());
     }
 }
