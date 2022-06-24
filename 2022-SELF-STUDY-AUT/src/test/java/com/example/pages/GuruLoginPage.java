@@ -3,6 +3,7 @@ package com.example.pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import com.example.core.keywords.WebKeywords;
 
@@ -15,22 +16,25 @@ public class GuruLoginPage extends BasePage{
     }
 
     //Action
-    
-    /**
-     * Method for login on page
-     */
     public void actionLogin(){
-        txtEmail.sendKeys(email);
-        btnSubmit.click();
+        wait.until(ExpectedConditions.presenceOfElementLocated((By.xpath("//input[@id = 'email']"))));
+        WebElement txtEmail = driver.findElement(By.xpath("//input[@id = 'email']"));
+        WebElement txtPassword = driver.findElement(By.xpath("//input[@id = 'password']"));
+        WebElement btnLogin = driver.findElement(By.xpath("//button[@type = 'submit']"));
+        txtEmail.sendKeys("thoa.nguyen+op@finbase.vn");
+        txtPassword.sendKeys("finbase.vn");
+        btnLogin.click();
     }
-
-    /**
-     * Method for verify that the url of page has contains the email of user when user login.
-     * @return true or false
-     */
-    public boolean isUrlCurrentPageContainsEmailOfUser(){
-        String urlCurrent = driver.getCurrentUrl();
-        if (urlCurrent.contains(email)){
+    
+    public boolean isLoginSuccess() throws Exception{
+        WebElement sectionPage;
+        try {
+            sectionPage = driver.findElement(By.xpath("//section[@class='ant-layout ant-layout-has-sider MainLayout_layout__3wKfs']"));
+        } catch (Exception e) {
+            throw new Exception("Exception: " + e.getMessage());
+        }
+        
+        if (sectionPage != null){
             return true;
         } else {
             return false;
@@ -38,9 +42,6 @@ public class GuruLoginPage extends BasePage{
     }
 
     //Declare element
-    private WebElement txtEmail = driver.findElement(By.xpath("//input[@name = 'emailid']"));
-    private WebElement btnSubmit = driver.findElement(By.xpath("//input[@name = 'btnLogin']"));
     
-    private String email = "tund.fit@gmail.com";
     
 }
